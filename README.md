@@ -1,3 +1,3 @@
 # jpa1-division
 
-Please see division.html for further information
+Please see division.pdf for further information
