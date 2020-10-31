@@ -1,0 +1,58 @@
+= Beispiel - Abteilungsverwaltung
+
+Ziel dieser Beispiels ist die praktische Anwendung von JPA2 (Hibernate) zum Persistieren von Objekten eines Klassenmodells mit Beziehungen / Abhängigkeiten sowie Vererbung.
+
+
+=== Ausgangslage
+
+Das Klassenmodell ist Teil einer Software zur Verwaltung der Mitarbeiter einer Abteilung:
+
+
+[plantuml,"clsdiag"]
+----
+class Intern
+class Manager
+class Employee
+class Address
+class Division
+class Task
+
+Employee <|-- Intern
+Employee <|-- Manager
+
+Employee "0..*" -- "0..n" Task
+Employee "1"    -- "1"    Address
+Employee "0..n" -- "1"    Division
+
+Division : name : String
+
+Employee : firstName : String
+Employee : lastName : String
+Employee : salary : Integer
+
+Intern : internShipEnd : Date
+
+Manager : bonus : Integer
+Manager : onEjectSeat : boolean
+
+Address : street : String
+Address : number : String
+Address : zipCode : Integer
+
+Task : name : String
+Task : bonus : Integer
+
+Intern -[hidden]> Manager
+----
+
+Es gibt "normale" Mitarbeiter, von welchen Vor-, Nachname sowie das Gehalt erfasst werden.
+Weiters gibt es Praktikanten (Intern), bei welchen zusätzlich das Ende des Praktikums als Datumswert vorliegt.
+Bei Managern wird zusätzlich noch der Gehaltbonus gespeichert und ob bei Verfehlungen eine Entlassung dort (onEjectSeat == true).
+
+Ein Mitarbeiter ist genau einer Abteilung zugeordnet.
+
+Einem Mitarbeiter ist genau eine Adresse zugeordnet.
+
+Einem Mitarbeiter können mehrere Aufgaben (Tasks) zugeordnet werden, wobei ein Task auch von mehreren Mitarbeitern erledigt werden kann.
+
+
